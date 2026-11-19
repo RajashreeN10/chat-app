@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import {hash,genSalt} from "bcrypt";
+//first we need to 
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -31,8 +32,12 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+//middleware to hash password before saving
 userSchema.pre("save", async function (next) {
-    const salt = await gensalt();this.password = await hash(this.password, salt);next();});
+    const salt = await genSalt();
+    this.password = await hash(this.password, salt);
+    next();
+});
 
     const User = mongoose.model("Users", userSchema);
 
